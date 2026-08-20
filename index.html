@@ -1,0 +1,885 @@
+<html style="margin:0;padding:0;">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+(function(){
+  var s = document.createElement('style');
+  s.textContent = `
+    :root {
+      --blue: #0055A4;
+      --blue-soft: rgba(0, 85, 164, 0.12);
+      --white: #FFFFFF;
+      --red: #EF4135;
+      --red-soft: rgba(239, 65, 53, 0.12);
+      --text: #1a1a2e;
+      --muted: #64748b;
+      --border: rgba(0, 85, 164, 0.15);
+      --bg: #fafcff;
+      --card: #ffffff;
+    }
+    
+    * { box-sizing: border-box; }
+    
+    html { scroll-behavior: smooth; }
+    
+    body {
+      margin: 0;
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+    
+    .font-display { font-family: 'Playfair Display', serif; }
+    
+    .flag-stripe {
+      height: 4px;
+      background: linear-gradient(90deg, var(--blue) 0%, var(--blue) 33.33%, var(--white) 33.33%, var(--white) 66.66%, var(--red) 66.66%, var(--red) 100%);
+    }
+    
+    .nav-link {
+      position: relative;
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 8px 4px;
+      transition: color 0.3s;
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--red);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover { color: var(--blue); }
+    .nav-link:hover::after { width: 100%; }
+    
+    .hero-overlay {
+      background: linear-gradient(135deg, rgba(0,85,164,0.75) 0%, rgba(255,255,255,0.1) 50%, rgba(239,65,53,0.65) 100%);
+    }
+    
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .tab-btn {
+      padding: 14px 28px;
+      border: 2px solid var(--border);
+      background: var(--white);
+      color: var(--muted);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border-radius: 10px;
+      font-size: 15px;
+    }
+    
+    .tab-btn:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+    
+    .tab-btn.active {
+      background: linear-gradient(135deg, var(--blue), #003d7a);
+      color: var(--white);
+      border-color: var(--blue);
+      box-shadow: 0 8px 25px rgba(0,85,164,0.3);
+    }
+    
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    .tab-content.active { display: block; }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .card-hover {
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(0,85,164,0.18);
+    }
+    
+    .timeline-item {
+      position: relative;
+      padding-left: 40px;
+      padding-bottom: 35px;
+    }
+    
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 11px;
+      top: 30px;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(var(--blue), var(--red));
+    }
+    
+    .timeline-item:last-child::before { display: none; }
+    
+    .timeline-dot {
+      position: absolute;
+      left: 0;
+      top: 4px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 3px solid var(--red);
+      box-shadow: 0 0 0 4px var(--red-soft);
+    }
+    
+    .timeline-item:nth-child(even) .timeline-dot {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 4px var(--blue-soft);
+    }
+    
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      background: linear-gradient(135deg, var(--blue), #003d7a);
+      color: var(--white);
+      font-weight: 600;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 35px rgba(0,85,164,0.4);
+    }
+    
+    .section-title {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--blue), var(--red));
+      border-radius: 2px;
+    }
+    
+    .motto-text {
+      background: linear-gradient(90deg, var(--blue), var(--red));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 700;
+    }
+    
+    .footer-bg {
+      background: linear-gradient(135deg, #0a1628 0%, var(--blue) 100%);
+    }
+    
+    .scales-icon {
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
+    }
+    
+    .mobile-menu {
+      display: none;
+    }
+    
+    @media (max-width: 768px) {
+      .desktop-nav { display: none; }
+      .mobile-menu { display: block; }
+      .mobile-menu-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 8px;
+      }
+      .mobile-nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--white);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        padding: 20px;
+        z-index: 100;
+      }
+      .mobile-nav.open { display: block; }
+      .mobile-nav a {
+        display: block;
+        padding: 12px 0;
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 500;
+        border-bottom: 1px solid var(--border);
+      }
+      .mobile-nav a:last-child { border-bottom: none; }
+    }
+  `;
+  document.head.appendChild(s);
+})();
+</script>
+
+<div style="background-color:transparent;box-sizing:border-box;">
+  <div style="min-height:100%;">
+    
+    <!-- Header -->
+    <header style="position:sticky;top:0;z-index:1000;background:rgba(255,255,255,0.97);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);">
+      <div class="flag-stripe"></div>
+      <div style="max-width:1280px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:relative;">
+        <!-- Logo -->
+        <a href="#inicio" style="display:flex;align-items:center;gap:14px;text-decoration:none;">
+          <img src="https://p19-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/0750b88a9391482caf9e12eaacc651a8.jpeg~tplv-0es2k971ck-image.image?rcl=20260820210153D1E50A7BC869DEAA6916&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789823001&x-signature=%2BadPBzCBuWS3MWdpKDPpalLV%2FUc%3D" 
+               alt="Balança da Justiça" 
+               style="width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid var(--blue);"
+               onerror="this.style.display='none'"
+               class="scales-icon">
+          <div>
+            <div style="font-family:'Playfair Display',serif;font-weight:700;font-size:22px;color:var(--blue);line-height:1;">France</div>
+            <div style="font-size:11px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;">Liberté · Égalité · Fraternité</div>
+          </div>
+        </a>
+        
+        <!-- Desktop Nav -->
+        <nav class="desktop-nav" style="display:flex;gap:32px;align-items:center;">
+          <a href="#inicio" class="nav-link">Início</a>
+          <a href="#sobre" class="nav-link">Sobre</a>
+          <a href="#turismo" class="nav-link">Turismo</a>
+          <a href="#cultura" class="nav-link">Cultura</a>
+          <a href="#historia" class="nav-link">História</a>
+        </nav>
+        
+        <!-- Mobile Menu Button -->
+        <div class="mobile-menu">
+          <button class="mobile-menu-btn" onclick="toggleMobileNav()" aria-label="Menu">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2.5">
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+          </button>
+          <div class="mobile-nav" id="mobileNav">
+            <a href="#inicio" onclick="toggleMobileNav()">Início</a>
+            <a href="#sobre" onclick="toggleMobileNav()">Sobre</a>
+            <a href="#turismo" onclick="toggleMobileNav()">Turismo</a>
+            <a href="#cultura" onclick="toggleMobileNav()">Cultura</a>
+            <a href="#historia" onclick="toggleMobileNav()">História</a>
+          </div>
+        </div>
+      </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section id="inicio" style="position:relative;overflow:hidden;">
+      <div style="position:relative;height:650px;">
+        <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/500650736edd4e40b72cc6f0182e4038.jpeg~tplv-0es2k971ck-image.image?rcl=20260820210153D1E50A7BC869DEAA6916&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789822972&x-signature=j4vVTpygp7AlgK0OoHMdsq9rA8U%3D" 
+             alt="Paris com Torre Eiffel" 
+             style="width:100%;height:100%;object-fit:cover;"
+             onerror="this.style.display='none'">
+        <div class="hero-overlay" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;">
+          <div style="color:var(--white);max-width:800px;">
+            <p style="font-size:14px;letter-spacing:0.4em;text-transform:uppercase;margin-bottom:20px;opacity:0.95;">Bem-vindo à</p>
+            <h1 style="font-family:'Playfair Display',serif;font-size:clamp(42px,7vw,84px);font-weight:700;margin:0 0 24px;line-height:1.1;text-shadow:0 4px 20px rgba(0,0,0,0.3);">
+              França
+            </h1>
+            <div style="font-size:clamp(20px,3vw,32px);font-weight:600;margin-bottom:32px;letter-spacing:0.05em;text-shadow:0 2px 15px rgba(0,0,0,0.3);">
+              <span style="color:#a8c8ff;">Liberté</span>
+              <span style="margin:0 16px;">·</span>
+              <span style="color:#ffffff;">Égalité</span>
+              <span style="margin:0 16px;">·</span>
+              <span style="color:#ffb3b3;">Fraternité</span>
+            </div>
+            <p style="font-size:18px;opacity:0.95;max-width:600px;margin:0 auto 40px;line-height:1.7;">
+              Liberdade, Igualdade e Fraternidade — os ideais que moldaram uma nação e inspiraram o mundo. Descubra a terra da arte, da gastronomia e da história.
+            </p>
+            <a href="#sobre" class="btn-primary">
+              Explorar
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="5" y1="12" x2="19" y2="12"/>
+                <polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Sobre a França -->
+    <section id="sobre" style="padding:100px 24px;max-width:1280px;margin:0 auto;">
+      <div class="reveal">
+        <p style="color:var(--red);font-size:13px;letter-spacing:0.25em;text-transform:uppercase;font-weight:600;margin-bottom:12px;">Conheça</p>
+        <h2 class="section-title font-display" style="font-size:clamp(32px,5vw,48px);font-weight:700;margin:0 0 40px;color:var(--text);">Sobre a França</h2>
+      </div>
+      
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px;align-items:center;">
+        <div class="reveal">
+          <p style="font-size:17px;color:var(--text);line-height:1.8;margin-bottom:20px;">
+            A <strong>França</strong>, oficialmente República Francesa, é um país localizado na Europa Ocidental. Com uma área de aproximadamente 643.801 km² e mais de 68 milhões de habitantes, é um dos países mais influentes do continente europeu e do mundo.
+          </p>
+          <p style="font-size:17px;color:var(--text);line-height:1.8;margin-bottom:20px;">
+            Sua capital, <strong>Paris</strong>, é uma das cidades mais visitadas do planeta, conhecida como a "Cidade Luz" e centro global da arte, moda, gastronomia e cultura. A França é famosa por sua rica herança histórica, que vai desde os tempos romanos até a Revolução Francesa e além.
+          </p>
+          <p style="font-size:17px;color:var(--text);line-height:1.8;">
+            O país é membro fundador da União Europeia, da OTAN e do G7, e possui uma das maiores economias do mundo. Sua língua, o francês, é falada por mais de 300 milhões de pessoas em todos os continentes.
+          </p>
+        </div>
+        
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px;" class="reveal">
+          <div class="card-hover" style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;text-align:center;border-top:4px solid var(--blue);">
+            <div style="font-family:'Playfair Display',serif;font-size:42px;font-weight:700;color:var(--blue);margin-bottom:8px;">68M+</div>
+            <div style="color:var(--muted);font-size:14px;font-weight:500;">Habitantes</div>
+          </div>
+          <div class="card-hover" style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;text-align:center;border-top:4px solid var(--red);">
+            <div style="font-family:'Playfair Display',serif;font-size:42px;font-weight:700;color:var(--red);margin-bottom:8px;">643K</div>
+            <div style="color:var(--muted);font-size:14px;font-weight:500;">Km² de área</div>
+          </div>
+          <div class="card-hover" style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;text-align:center;border-top:4px solid var(--blue);">
+            <div style="font-family:'Playfair Display',serif;font-size:42px;font-weight:700;color:var(--blue);margin-bottom:8px;">89M+</div>
+            <div style="color:var(--muted);font-size:14px;font-weight:500;">Turistas/ano</div>
+          </div>
+          <div class="card-hover" style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;text-align:center;border-top:4px solid var(--red);">
+            <div style="font-family:'Playfair Display',serif;font-size:42px;font-weight:700;color:var(--red);margin-bottom:8px;">1792</div>
+            <div style="color:var(--muted);font-size:14px;font-weight:500;">Primeira República</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Motto Banner -->
+      <div class="reveal" style="margin-top:80px;background:linear-gradient(135deg,var(--blue-soft),var(--red-soft));border-radius:20px;padding:50px 40px;text-align:center;border:1px solid var(--border);">
+        <div style="font-family:'Playfair Display',serif;font-size:clamp(28px,5vw,48px);font-weight:700;margin-bottom:16px;">
+          <span class="motto-text">"Liberté, Égalité, Fraternité"</span>
+        </div>
+        <p style="color:var(--muted);font-size:16px;max-width:600px;margin:0 auto;font-style:italic;">
+          O lema nacional da França, nascido da Revolução Francesa (1789), que representa os valores fundamentais da República Francesa: Liberdade, Igualdade e Fraternidade.
+        </p>
+      </div>
+    </section>
+    
+    <!-- Pontos Turísticos -->
+    <section id="turismo" style="padding:100px 24px;background:linear-gradient(180deg,var(--white),#f0f6ff);">
+      <div style="max-width:1280px;margin:0 auto;">
+        <div class="reveal" style="text-align:center;margin-bottom:50px;">
+          <p style="color:var(--blue);font-size:13px;letter-spacing:0.25em;text-transform:uppercase;font-weight:600;margin-bottom:12px;">Descubra</p>
+          <h2 class="font-display" style="font-size:clamp(32px,5vw,48px);font-weight:700;margin:0 0 16px;color:var(--text);">Pontos Turísticos</h2>
+          <p style="color:var(--muted);font-size:17px;max-width:600px;margin:0 auto;">Das ruas de Paris às paisagens de Lyon e à arquitetura única de Estrasburgo</p>
+        </div>
+        
+        <!-- Tabs -->
+        <div class="reveal" style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-bottom:40px;">
+          <button class="tab-btn active" onclick="switchTab('turismo','paris',this)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:6px;">
+              <path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/>
+            </svg>
+            Paris
+          </button>
+          <button class="tab-btn" onclick="switchTab('turismo','lyon',this)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:6px;">
+              <path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+            Lyon
+          </button>
+          <button class="tab-btn" onclick="switchTab('turismo','estrasburgo',this)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:6px;">
+              <rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/>
+            </svg>
+            Estrasburgo
+          </button>
+        </div>
+        
+        <!-- Paris Content -->
+        <div id="turismo-paris" class="tab-content active">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;">
+            <div class="card-hover" style="border-radius:20px;overflow:hidden;box-shadow:0 15px 40px rgba(0,0,0,0.15);">
+              <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/500650736edd4e40b72cc6f0182e4038.jpeg~tplv-0es2k971ck-image.image?rcl=20260820210153D1E50A7BC869DEAA6916&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789822972&x-signature=j4vVTpygp7AlgK0OoHMdsq9rA8U%3D" 
+                   alt="Paris" 
+                   style="width:100%;height:450px;object-fit:cover;display:block;"
+                   onerror="this.style.display='none'">
+            </div>
+            <div>
+              <h3 class="font-display" style="font-size:36px;font-weight:700;color:var(--blue);margin:0 0 20px;">Paris — A Cidade Luz</h3>
+              <p style="font-size:16px;color:var(--text);line-height:1.8;margin-bottom:16px;">
+                Capital da França e uma das cidades mais icônicas do mundo. Paris é famosa por sua arquitetura deslumbrante, museus de classe mundial e atmosfera romântica.
+              </p>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px;">
+                <div style="background:var(--blue-soft);border-radius:12px;padding:16px;">
+                  <div style="font-weight:700;color:var(--blue);margin-bottom:4px;">Torre Eiffel</div>
+                  <div style="font-size:13px;color:var(--muted);">330m de altura</div>
+                </div>
+                <div style="background:var(--red-soft);border-radius:12px;padding:16px;">
+                  <div style="font-weight:700;color:var(--red);margin-bottom:4px;">Museu do Louvre</div>
+                  <div style="font-size:13px;color:var(--muted);">Maior museu de arte</div>
+                </div>
+                <div style="background:var(--blue-soft);border-radius:12px;padding:16px;">
+                  <div style="font-weight:700;color:var(--blue);margin-bottom:4px;">Catedral de Notre-Dame</div>
+                  <div style="font-size:13px;color:var(--muted);">Gótica francesa</div>
+                </div>
+                <div style="background:var(--red-soft);border-radius:12px;padding:16px;">
+                  <div style="font-weight:700;color:var(--red);margin-bottom:4px;">Arco do Triunfo</div>
+                  <div style="font-size:13px;color:var(--muted);">Champs-Élysées</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Lyon Content -->
+        <div id="turismo-lyon" class="tab-content">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;">
+            <div class="card-hover" style="border-radius:20px;overflow:hidden;box-shadow:0 15px 40px rgba(0,0,0,0.15);">
+              <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/c4bf275e715e439593c531a81db05a88.jpeg~tplv-0es2k971ck-image.image?rcl=20260820210153D1E50A7BC869DEAA6916&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789823003&x-signature=ZsLsluKUcGOIxoSAN2mNzGuVfsQ%3D" 
+                   alt="Lyon" 
+                   style="width:100%;height:450px;object-fit:cover;display:block;"
+                   onerror="this.style.display='none'">
+            </div>
+            <div>
+              <h3 class="font-display" style="font-size:36px;font-weight:700;color:var(--red);margin:0 0 20px;">Lyon — A Capital da Gastronomia</h3>
+              <p style="font-size:16px;color:var(--text);line-height:1.8;margin-bottom:16px;">
+                Terceira maior cidade da França, Lyon é um tesouro histórico e gastronômico. Situada na confluência dos rios Ródano e Saône, sua arquitetura reflete séculos de história.
+              </p>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px;">
+                <div style="background:var(--red-soft);border-radius:12px;padding:16px;">
+                  <div style="font-weight:700;color:var(--red);margin-bottom:4px;">Basílica de Fourvière</div>
+                  <div style="font-size:13px;color:var(--muted);">Vista panorâmica</div>
+                </div>
+                <div style="background:var(--blue-soft);border-radius:12px;padding:16px;">
+                  <div style="font-weight:700;color:var(--blue);margin-bottom:4px;">Vieux Lyon</div>
+                  <div style="font-size:13px;color:var(--muted);">Centro histórico</div>
+                </div>
+                <div style="background:var(--red-soft);border-radius:12px;padding:16px;">
+                  <div style="font-weight:700;color:var(--red);margin-bottom:4px;">Traboules</div>
+                  <div style="font-size:13px;color:var(--muted);">Passagens secretas</div>
+                </div>
+                <div style="background:var(--blue-soft);border-radius:12px;padding:16px;">
+                  <div style="font-weight:700;color:var(--blue);margin-bottom:4px;">Cozinha Lyonnaise</div>
+                  <div style="font-size:13px;color:var(--muted);">Bouchons típicos</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Estrasburgo Content -->
+        <div id="turismo-estrasburgo" class="tab-content">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;">
+            <div class="card-hover" style="border-radius:20px;overflow:hidden;box-shadow:0 15px 40px rgba(0,0,0,0.15);">
+              <img src="https://p19-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/a537a3bf05174bd7bb41a20c658c224e.jpeg~tplv-0es2k971ck-image.image?rcl=20260820210153D1E50A7BC869DEAA6916&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789822968&x-signature=tjRWimSXpffcXXgJCBg1qy8rRAM%3D" 
+                   alt="Estrasburgo" 
+                   style="width:100%;height:450px;object-fit:cover;display:block;"
+                   onerror="this.style.display='none'">
+            </div>
+            <div>
+              <h3 class="font-display" style="font-size:36px;font-weight:700;color:var(--blue);margin:0 0 20px;">Estrasburgo — O Coração da Europa</h3>
+              <p style="font-size:16px;color:var(--text);line-height:1.8;margin-bottom:16px;">
+                Localizada na fronteira com a Alemanha, Estrasburgo é uma cidade de cultura mista, com arquitetura de enxaimel única e sede de importantes instituições europeias.
+              </p>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px;">
+                <div style="background:var(--blue-soft);border-radius:12px;padding:16px;">
+                  <div style="font-weight:700;color:var(--blue);margin-bottom:4px;">Catedral de Estrasburgo</div>
+                  <div style="font-size:13px;color:var(--muted);">Gótica impressionante</div>
+                </div>
+                <div style="background:var(--red-soft);border-radius:12px;padding:16px;">
+                  <div style="font-weight:700;color:var(--red);margin-bottom:4px;">Petite France</div>
+                  <div style="font-size:13px;color:var(--muted);">Bairro histórico</div>
+                </div>
+                <div style="background:var(--blue-soft);border-radius:12px;padding:16px;">
+                  <div style="font-weight:700;color:var(--blue);margin-bottom:4px;">Conselho da Europa</div>
+                  <div style="font-size:13px;color:var(--muted);">Sede europeia</div>
+                </div>
+                <div style="background:var(--red-soft);border-radius:12px;padding:16px;">
+                  <div style="font-weight:700;color:var(--red);margin-bottom:4px;">Mercado de Natal</div>
+                  <div style="font-size:13px;color:var(--muted);">Um dos mais antigos</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Cultura Francesa -->
+    <section id="cultura" style="padding:100px 24px;max-width:1280px;margin:0 auto;">
+      <div class="reveal" style="text-align:center;margin-bottom:50px;">
+        <p style="color:var(--red);font-size:13px;letter-spacing:0.25em;text-transform:uppercase;font-weight:600;margin-bottom:12px;">Explore</p>
+        <h2 class="font-display" style="font-size:clamp(32px,5vw,48px);font-weight:700;margin:0 0 16px;color:var(--text);">Cultura Francesa</h2>
+        <p style="color:var(--muted);font-size:17px;max-width:600px;margin:0 auto;">Uma jornada pela gastronomia, história e personalidades que definiram a nação</p>
+      </div>
+      
+      <!-- Culture Tabs -->
+      <div class="reveal" style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-bottom:50px;">
+        <button class="tab-btn active" onclick="switchTab('cultura','gastronomia',this)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:6px;">
+            <path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>
+          </svg>
+          Gastronomia
+        </button>
+        <button class="tab-btn" onclick="switchTab('cultura','figuras',this)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:6px;">
+            <circle cx="12" cy="8" r="4"/><path d="M4 21v-1a8 8 0 0 1 16 0v1"/>
+          </svg>
+          Figuras Históricas
+        </button>
+      </div>
+      
+      <!-- Gastronomia Content -->
+      <div id="cultura-gastronomia" class="tab-content active">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-bottom:50px;">
+          <div class="card-hover" style="border-radius:20px;overflow:hidden;box-shadow:0 15px 40px rgba(0,0,0,0.12);">
+            <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/660c98bca949411c8f3609e1cf3627a5.jpeg~tplv-0es2k971ck-image.image?rcl=20260820210153D1E50A7BC869DEAA6916&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789822973&x-signature=iIPw23%2Fsp%2FqItK8jSZSqBtJX3aQ%3D" 
+                 alt="Gastronomia Francesa" 
+                 style="width:100%;height:400px;object-fit:cover;display:block;"
+                 onerror="this.style.display='none'">
+          </div>
+          <div>
+            <h3 class="font-display" style="font-size:32px;font-weight:700;color:var(--blue);margin:0 0 20px;">A Arte da Cozinha Francesa</h3>
+            <p style="font-size:16px;color:var(--text);line-height:1.8;margin-bottom:16px;">
+              A gastronomia francesa é considerada um patrimônio cultural imaterial da humanidade pela UNESCO. É conhecida por sua diversidade, refinamento e tradição que atravessa gerações.
+            </p>
+            <p style="font-size:16px;color:var(--text);line-height:1.8;">
+              Dos pães artesanais aos queijos requintados, dos vinhos premiados aos pratos elaborados com técnicas seculares, a cozinha francesa é uma verdadeira celebração dos sentidos.
+            </p>
+          </div>
+        </div>
+        
+        <!-- Food Cards -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px;">
+          <div class="card-hover reveal" style="background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+            <div style="height:160px;background:linear-gradient(135deg,#f4d03f,#e67e22);display:flex;align-items:center;justify-content:center;">
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5">
+                <path d="M2 16a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-2z"/>
+                <path d="M4 14V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v6"/>
+                <path d="M12 4v4"/>
+              </svg>
+            </div>
+            <div style="padding:24px;">
+              <h4 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--text);margin:0 0 8px;">Croissants</h4>
+              <p style="color:var(--muted);font-size:14px;line-height:1.6;">Pão folhado em forma de lua crescente, símbolo do café da manhã francês.</p>
+            </div>
+          </div>
+          
+          <div class="card-hover reveal" style="background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+            <div style="height:160px;background:linear-gradient(135deg,#f39c12,#c0392b);display:flex;align-items:center;justify-content:center;">
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5">
+                <circle cx="12" cy="12" r="9"/>
+                <path d="M12 3a9 9 0 0 0 0 18"/>
+                <path d="M3 12h18"/>
+              </svg>
+            </div>
+            <div style="padding:24px;">
+              <h4 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--text);margin:0 0 8px;">Queijos</h4>
+              <p style="color:var(--muted);font-size:14px;line-height:1.6;">Mais de 1.000 variedades, incluindo Brie, Camembert, Roquefort e Comté.</p>
+            </div>
+          </div>
+          
+          <div class="card-hover reveal" style="background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+            <div style="height:160px;background:linear-gradient(135deg,#722F37,#8B0000);display:flex;align-items:center;justify-content:center;">
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5">
+                <path d="M8 2h8v4a4 4 0 0 1-8 0V2z"/>
+                <path d="M12 6v14"/>
+                <path d="M8 20h8"/>
+              </svg>
+            </div>
+            <div style="padding:24px;">
+              <h4 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--text);margin:0 0 8px;">Vinhos</h4>
+              <p style="color:var(--muted);font-size:14px;line-height:1.6;">Bordeaux, Borgonha e Champagne são algumas das regiões vinícolas mais famosas.</p>
+            </div>
+          </div>
+          
+          <div class="card-hover reveal" style="background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+            <div style="height:160px;background:linear-gradient(135deg,#d35400,#e74c3c);display:flex;align-items:center;justify-content:center;">
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5">
+                <ellipse cx="12" cy="12" rx="10" ry="4"/>
+                <path d="M2 12v6c0 2.2 4.5 4 10 4s10-1.8 10-4v-6"/>
+              </svg>
+            </div>
+            <div style="padding:24px;">
+              <h4 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--text);margin:0 0 8px;">Macarons</h4>
+              <p style="color:var(--muted);font-size:14px;line-height:1.6;">Delicados biscoitos coloridos feitos de farinha de amêndoas e recheios cremosos.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Figuras Históricas Content -->
+      <div id="cultura-figuras" class="tab-content">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-bottom:50px;">
+          <div class="card-hover" style="border-radius:20px;overflow:hidden;box-shadow:0 15px 40px rgba(0,0,0,0.12);">
+            <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/046b2326d32e4baca65d1ebc6a7f9175.jpeg~tplv-0es2k971ck-image.image?rcl=20260820210153D1E50A7BC869DEAA6916&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789822998&x-signature=Rm3OSNH%2Fp7fki2tDCAXFOoVQ9EU%3D" 
+                 alt="Figuras Históricas" 
+                 style="width:100%;height:400px;object-fit:cover;display:block;"
+                 onerror="this.style.display='none'">
+          </div>
+          <div>
+            <h3 class="font-display" style="font-size:32px;font-weight:700;color:var(--red);margin:0 0 20px;">Personalidades que Fizeram História</h3>
+            <p style="font-size:16px;color:var(--text);line-height:1.8;">
+              A França deu ao mundo algumas das mentes mais brilhantes e figuras mais influentes da história. De líderes militares a cientistas revolucionários, de filósofos a santos, esses personagens moldaram não apenas a França, mas a civilização ocidental.
+            </p>
+          </div>
+        </div>
+        
+        <!-- Figures Cards -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;">
+          <div class="card-hover reveal" style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;border-left:4px solid var(--blue);">
+            <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
+              <div style="width:56px;height:56px;border-radius:50%;background:var(--blue-soft);display:flex;align-items:center;justify-content:center;color:var(--blue);font-family:'Playfair Display',serif;font-weight:700;font-size:24px;">JV</div>
+              <div>
+                <h4 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin:0;color:var(--text);">Joana d'Arc</h4>
+                <p style="color:var(--muted);font-size:13px;margin:2px 0 0;">1412 — 1431</p>
+              </div>
+            </div>
+            <p style="color:var(--text);font-size:14px;line-height:1.7;margin:0;">
+              A "Donzela de Orleans", heroína nacional que liderou o exército francês na Guerra dos Cem Anos. Canonizada como santa pela Igreja Católica.
+            </p>
+          </div>
+          
+          <div class="card-hover reveal" style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;border-left:4px solid var(--red);">
+            <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
+              <div style="width:56px;height:56px;border-radius:50%;background:var(--red-soft);display:flex;align-items:center;justify-content:center;color:var(--red);font-family:'Playfair Display',serif;font-weight:700;font-size:24px;">NB</div>
+              <div>
+                <h4 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin:0;color:var(--text);">Napoleão Bonaparte</h4>
+                <p style="color:var(--muted);font-size:13px;margin:2px 0 0;">1769 — 1821</p>
+              </div>
+            </div>
+            <p style="color:var(--text);font-size:14px;line-height:1.7;margin:0;">
+              Imperador dos franceses e gênio militar que dominou a Europa no início do século XIX. Seu Código Napoleônico influenciou sistemas jurídicos mundiais.
+            </p>
+          </div>
+          
+          <div class="card-hover reveal" style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;border-left:4px solid var(--blue);">
+            <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
+              <div style="width:56px;height:56px;border-radius:50%;background:var(--blue-soft);display:flex;align-items:center;justify-content:center;color:var(--blue);font-family:'Playfair Display',serif;font-weight:700;font-size:24px;">VL</div>
+              <div>
+                <h4 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin:0;color:var(--text);">Voltaire</h4>
+                <p style="color:var(--muted);font-size:13px;margin:2px 0 0;">1694 — 1778</p>
+              </div>
+            </div>
+            <p style="color:var(--text);font-size:14px;line-height:1.7;margin:0;">
+              Filósofo e escritor do Iluminismo, defensor da liberdade de expressão e da separação Igreja-Estado. Uma das vozes mais influentes de seu tempo.
+            </p>
+          </div>
+          
+          <div class="card-hover reveal" style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;border-left:4px solid var(--red);">
+            <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
+              <div style="width:56px;height:56px;border-radius:50%;background:var(--red-soft);display:flex;align-items:center;justify-content:center;color:var(--red);font-family:'Playfair Display',serif;font-weight:700;font-size:24px;">MC</div>
+              <div>
+                <h4 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin:0;color:var(--text);">Marie Curie</h4>
+                <p style="color:var(--muted);font-size:13px;margin:2px 0 0;">1867 — 1934</p>
+              </div>
+            </div>
+            <p style="color:var(--text);font-size:14px;line-height:1.7;margin:0;">
+              Física e química pioneira no estudo da radioatividade. Primeira pessoa a ganhar dois Prêmios Nobel em áreas diferentes (Física e Química).
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- História Timeline -->
+    <section id="historia" style="padding:100px 24px;background:linear-gradient(180deg,#f0f6ff,var(--white));">
+      <div style="max-width:900px;margin:0 auto;">
+        <div class="reveal" style="text-align:center;margin-bottom:60px;">
+          <p style="color:var(--blue);font-size:13px;letter-spacing:0.25em;text-transform:uppercase;font-weight:600;margin-bottom:12px;">Linha do Tempo</p>
+          <h2 class="font-display" style="font-size:clamp(32px,5vw,48px);font-weight:700;margin:0 0 16px;color:var(--text);">Momentos Históricos</h2>
+          <p style="color:var(--muted);font-size:17px;max-width:600px;margin:0 auto;">Os eventos que moldaram a França ao longo dos séculos</p>
+        </div>
+        
+        <div class="reveal">
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px 28px;">
+              <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--blue);margin-bottom:6px;">1789 — Revolução Francesa</div>
+              <p style="color:var(--text);font-size:15px;line-height:1.7;margin:0;">
+                A Queda da Bastilha marcou o início da Revolução Francesa, que aboliu a monarquia absoluta e proclamou os direitos do homem e do cidadão.
+              </p>
+            </div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px 28px;">
+              <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--red);margin-bottom:6px;">1804 — Império Napoleônico</div>
+              <p style="color:var(--text);font-size:15px;line-height:1.7;margin:0;">
+                Napoleão Bonaparte é coroado Imperador. Expandiu o território francês e implementou reformas legais e administrativas que duram até hoje.
+              </p>
+            </div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px 28px;">
+              <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--blue);margin-bottom:6px;">1870 — Terceira República</div>
+              <p style="color:var(--text);font-size:15px;line-height:1.7;margin:0;">
+                Proclamada após a derrota na Guerra Franco-Prussiana, a Terceira República durou até 1940 e consolidou as instituições democráticas francesas.
+              </p>
+            </div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px 28px;">
+              <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--red);margin-bottom:6px;">1944 — Libertação de Paris</div>
+              <p style="color:var(--text);font-size:15px;line-height:1.7;margin:0;">
+                Paris é libertada da ocupação nazista pelas forças aliadas e pela Resistência Francesa, marcando um ponto de virada na Segunda Guerra Mundial.
+              </p>
+            </div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px 28px;">
+              <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--blue);margin-bottom:6px;">1958 — Quinta República</div>
+              <p style="color:var(--text);font-size:15px;line-height:1.7;margin:0;">
+                Charles de Gaulle funda a Quinta República com uma nova constituição que fortalece o poder presidencial, sistema que vigora até hoje.
+              </p>
+            </div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px 28px;">
+              <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--red);margin-bottom:6px;">1992 — Tratado de Maastricht</div>
+              <p style="color:var(--text);font-size:15px;line-height:1.7;margin:0;">
+                A França se torna um dos membros fundadores da União Europeia, reafirmando seu papel central na construção europeia e na paz continental.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="footer-bg" style="color:var(--white);padding:60px 24px 30px;">
+      <div style="max-width:1280px;margin:0 auto;">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:40px;margin-bottom:40px;">
+          <div>
+            <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;">
+              <img src="https://p19-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/0750b88a9391482caf9e12eaacc651a8.jpeg~tplv-0es2k971ck-image.image?rcl=20260820210153D1E50A7BC869DEAA6916&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789823001&x-signature=%2BadPBzCBuWS3MWdpKDPpalLV%2FUc%3D" 
+                   alt="Balança da Justiça" 
+                   style="width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,0.3);"
+                   onerror="this.style.display='none'">
+              <div>
+                <div style="font-family:'Playfair Display',serif;font-weight:700;font-size:24px;">France</div>
+                <div style="font-size:11px;opacity:0.7;letter-spacing:0.1em;">República Francesa</div>
+              </div>
+            </div>
+            <p style="opacity:0.8;font-size:14px;line-height:1.7;">
+              Um tributo à terra da liberdade, igualdade e fraternidade. Celebrando a rica herança cultural, histórica e artística da França.
+            </p>
+          </div>
+          
+          <div>
+            <h4 style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;margin:0 0 16px;">Navegação</h4>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <a href="#inicio" style="color:rgba(255,255,255,0.8);text-decoration:none;font-size:14px;transition:color 0.3s;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='rgba(255,255,255,0.8)'">Início</a>
+              <a href="#sobre" style="color:rgba(255,255,255,0.8);text-decoration:none;font-size:14px;transition:color 0.3s;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='rgba(255,255,255,0.8)'">Sobre</a>
+              <a href="#turismo" style="color:rgba(255,255,255,0.8);text-decoration:none;font-size:14px;transition:color 0.3s;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='rgba(255,255,255,0.8)'">Turismo</a>
+              <a href="#cultura" style="color:rgba(255,255,255,0.8);text-decoration:none;font-size:14px;transition:color 0.3s;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='rgba(255,255,255,0.8)'">Cultura</a>
+              <a href="#historia" style="color:rgba(255,255,255,0.8);text-decoration:none;font-size:14px;transition:color 0.3s;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='rgba(255,255,255,0.8)'">História</a>
+            </div>
+          </div>
+          
+          <div>
+            <h4 style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;margin:0 0 16px;">Lema Nacional</h4>
+            <div style="background:rgba(255,255,255,0.1);border-radius:12px;padding:20px;text-align:center;border:1px solid rgba(255,255,255,0.15);">
+              <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin-bottom:8px;">
+                <span style="color:#a8c8ff;">Liberté</span>
+                <span style="margin:0 8px;opacity:0.5;">·</span>
+                <span style="color:#ffffff;">Égalité</span>
+                <span style="margin:0 8px;opacity:0.5;">·</span>
+                <span style="color:#ffb3b3;">Fraternité</span>
+              </div>
+              <p style="font-size:12px;opacity:0.7;margin:0;font-style:italic;">Liberdade, Igualdade, Fraternidade</p>
+            </div>
+          </div>
+        </div>
+        
+        <div style="border-top:1px solid rgba(255,255,255,0.15);padding-top:24px;text-align:center;">
+          <p style="font-size:13px;opacity:0.6;margin:0;">
+            Site informativo sobre a França • Conteúdo educativo e cultural
+          </p>
+        </div>
+      </div>
+    </footer>
+    
+  </div>
+</div>
+
+<script>
+(function(){
+  // Tab switching function
+  window.switchTab = function(group, tab, btn) {
+    // Deactivate all tabs in this group
+    var contents = document.querySelectorAll('[id^="' + group + '-"]');
+    contents.forEach(function(c) { c.classList.remove('active'); });
+    
+    var buttons = btn.parentElement.querySelectorAll('.tab-btn');
+    buttons.forEach(function(b) { b.classList.remove('active'); });
+    
+    // Activate selected
+    document.getElementById(group + '-' + tab).classList.add('active');
+    btn.classList.add('active');
+  };
+  
+  // Mobile nav toggle
+  window.toggleMobileNav = function() {
+    var nav = document.getElementById('mobileNav');
+    nav.classList.toggle('open');
+  };
+  
+  // Scroll reveal animation
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  
+  document.querySelectorAll('.reveal').forEach(function(el) {
+    observer.observe(el);
+  });
+  
+  // Smooth scroll for nav links
+  document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+    anchor.addEventListener('click', function(e) {
+      var href = this.getAttribute('href');
+      if (href.length > 1) {
+        var target = document.querySelector(href);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    });
+  });
+})();
+</script>
+</html>
