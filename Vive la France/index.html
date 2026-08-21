@@ -1,5 +1,5 @@
 <html style="margin:0;padding:0;">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
 (function(){
@@ -15,7 +15,7 @@
       --muted: #64748b;
       --border: rgba(0, 85, 164, 0.15);
       --bg: #fafcff;
-      --card: #ffffff;
+      --card: rgba(255, 255, 255, 0.92);
       --gold: #C9A227;
       --gold-soft: rgba(201, 162, 39, 0.1);
       --cream: #fdf8f0;
@@ -28,9 +28,16 @@
     body {
       margin: 0;
       font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
       color: var(--text);
       line-height: 1.7;
+      background: linear-gradient(180deg, 
+        rgba(0, 85, 164, 0.12) 0%, 
+        rgba(255, 255, 255, 1) 25%, 
+        rgba(255, 255, 255, 1) 50%, 
+        rgba(255, 255, 255, 1) 75%, 
+        rgba(239, 65, 53, 0.10) 100%);
+      background-attachment: fixed;
+      min-height: 100%;
     }
     
     .font-display { font-family: 'Playfair Display', serif; }
@@ -67,57 +74,43 @@
       background: linear-gradient(135deg, rgba(0,85,164,0.78) 0%, rgba(255,255,255,0.12) 50%, rgba(239,65,53,0.68) 100%);
     }
     
-    .holographic-wrapper {
+    .motto-wrapper {
       position: relative;
       display: inline-block;
-      padding: 18px 36px;
-      border-radius: 16px;
+      padding: 20px 40px;
+      border-radius: 4px;
     }
     
-    .holographic-wrapper::before {
+    .motto-wrapper::before,
+    .motto-wrapper::after {
       content: '';
       position: absolute;
-      inset: -3px;
-      border-radius: 18px;
-      background: linear-gradient(
-        45deg,
-        #0055A4,
-        #4da3ff,
-        #ffffff,
-        #ffd700,
-        #ff6b6b,
-        #EF4135,
-        #ff6b6b,
-        #ffffff,
-        #4da3ff,
-        #0055A4
-      );
-      background-size: 400% 400%;
-      animation: holographicShift 4s ease infinite;
-      z-index: 0;
-      filter: blur(1.5px);
-      opacity: 0.95;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 2px;
+      background: rgba(255,255,255,0.8);
     }
     
-    .holographic-wrapper::after {
-      content: '';
+    .motto-wrapper::before { top: 0; }
+    .motto-wrapper::after { bottom: 0; }
+    
+    .motto-wrapper .line-left,
+    .motto-wrapper .line-right {
       position: absolute;
-      inset: 0;
-      border-radius: 16px;
-      background: rgba(0, 0, 0, 0.28);
-      backdrop-filter: blur(10px);
-      z-index: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 2px;
+      height: 30px;
+      background: rgba(255,255,255,0.8);
     }
     
-    .holographic-content {
+    .motto-wrapper .line-left { left: 0; }
+    .motto-wrapper .line-right { right: 0; }
+    
+    .motto-inner {
       position: relative;
       z-index: 1;
-    }
-    
-    @keyframes holographicShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
     }
     
     .reveal {
@@ -134,7 +127,7 @@
     .tab-btn {
       padding: 14px 22px;
       border: 2px solid var(--border);
-      background: var(--white);
+      background: rgba(255,255,255,0.9);
       color: var(--muted);
       font-weight: 600;
       cursor: pointer;
@@ -188,13 +181,8 @@
       align-items: center;
     }
     
-    .timeline-item:nth-child(even) .timeline-img {
-      order: 2;
-    }
-    
-    .timeline-item:nth-child(even) .timeline-text {
-      order: 1;
-    }
+    .timeline-item:nth-child(even) .timeline-img { order: 2; }
+    .timeline-item:nth-child(even) .timeline-text { order: 1; }
     
     .timeline-img img {
       width: 100%;
@@ -276,9 +264,7 @@
       filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
     }
     
-    .mobile-menu {
-      display: none;
-    }
+    .mobile-menu { display: none; }
     
     .culture-card-img {
       width: 100%;
@@ -296,13 +282,13 @@
     }
     
     .revolution-section {
-      background: linear-gradient(135deg, rgba(0,85,164,0.04), rgba(239,65,53,0.04));
+      background: linear-gradient(135deg, rgba(0,85,164,0.06), rgba(239,65,53,0.06));
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
     }
     
     .fashion-section {
-      background: linear-gradient(180deg, var(--cream), #faf5eb);
+      background: linear-gradient(180deg, rgba(253,248,240,0.6), rgba(250,245,235,0.6));
     }
     
     .ornament-divider {
@@ -335,11 +321,24 @@
     }
     
     .fashion-card {
-      background: var(--white);
+      background: rgba(255,255,255,0.92);
       border: 1px solid rgba(201, 162, 39, 0.2);
       border-radius: 16px;
       overflow: hidden;
       box-shadow: 0 4px 20px rgba(201, 162, 39, 0.08);
+    }
+    
+    .hero-title-elegant {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      background: linear-gradient(180deg, #ffffff 0%, #f0f0f0 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 2px 0 rgba(0,0,0,0.1);
+      filter: drop-shadow(0 4px 20px rgba(0,0,0,0.35));
     }
     
     @media (max-width: 768px) {
@@ -357,7 +356,8 @@
         top: 100%;
         left: 0;
         right: 0;
-        background: var(--white);
+        background: rgba(255,255,255,0.98);
+        backdrop-filter: blur(10px);
         box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         padding: 20px;
         z-index: 100;
@@ -372,7 +372,6 @@
         border-bottom: 1px solid var(--border);
       }
       .mobile-nav a:last-child { border-bottom: none; }
-      .holographic-wrapper { padding: 12px 20px; }
     }
   `;
   document.head.appendChild(s);
@@ -383,7 +382,7 @@
   <div style="min-height:100%;">
     
     <!-- Header -->
-    <header style="position:sticky;top:0;z-index:1000;background:rgba(255,255,255,0.97);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);">
+    <header style="position:sticky;top:0;z-index:1000;background:rgba(255,255,255,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);">
       <div class="flag-stripe"></div>
       <div style="max-width:1280px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:relative;">
         <a href="#inicio" style="display:flex;align-items:center;gap:14px;text-decoration:none;">
@@ -429,28 +428,34 @@
       </div>
     </header>
     
-    <!-- Hero Section -->
+    <!-- Hero Section - IMAGEM ATUALIZADA + FONTE ELEGANTE -->
     <section id="inicio" style="position:relative;overflow:hidden;">
       <div style="position:relative;height:680px;">
-        <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/500650736edd4e40b72cc6f0182e4038.jpeg~tplv-0es2k971ck-image.image?rcl=20260820210153D1E50A7BC869DEAA6916&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789822972&x-signature=j4vVTpygp7AlgK0OoHMdsq9rA8U%3D" 
-             alt="Paris com Torre Eiffel" 
+        <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-uo7y4d541q/221de2c0b94a419caf3560608626815f.jpg~tplv-0es2k971ck-image.image?rcl=20260821233840247486BBC5A3A50313DA&rk3s=8e244e95&rrcfp=935dee89&x-expires=1787931521&x-signature=hejb%2FqA9UEEWto%2BrQyYHZy3vdrk%3D" 
+             alt="Torre Eiffel - Paris" 
              style="width:100%;height:100%;object-fit:cover;"
              onerror="this.style.display='none'">
         <div class="hero-overlay" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;">
           <div style="color:var(--white);max-width:800px;">
-            <p style="font-size:14px;letter-spacing:0.4em;text-transform:uppercase;margin-bottom:20px;opacity:0.95;">Bem-vindo à</p>
-            <h1 style="font-family:'Playfair Display',serif;font-size:clamp(42px,7vw,84px);font-weight:700;margin:0 0 28px;line-height:1.1;text-shadow:0 4px 25px rgba(0,0,0,0.4);">
+            <p style="font-size:14px;letter-spacing:0.4em;text-transform:uppercase;margin-bottom:20px;opacity:0.95;font-family:'Playfair Display',serif;font-style:italic;">Bienvenue en</p>
+            
+            <!-- FONTE MAIS ELEGANTE PARA "FRANÇA" -->
+            <h1 class="hero-title-elegant" style="font-size:clamp(56px,9vw,110px);margin:0 0 28px;line-height:1.05;">
               França
             </h1>
-            <div class="holographic-wrapper" style="margin-bottom:32px;">
-              <div class="holographic-content" style="font-size:clamp(18px,3vw,30px);font-weight:700;letter-spacing:0.05em;">
-                <span style="color:#66b3ff;text-shadow:0 0 18px rgba(102,179,255,0.7);">Liberté</span>
-                <span style="margin:0 14px;color:#ffffff;text-shadow:0 0 12px rgba(255,255,255,0.6);">·</span>
-                <span style="color:#ffffff;text-shadow:0 0 18px rgba(255,255,255,0.7);">Égalité</span>
-                <span style="margin:0 14px;color:#ffffff;text-shadow:0 0 12px rgba(255,255,255,0.6);">·</span>
-                <span style="color:#ff8585;text-shadow:0 0 18px rgba(255,133,133,0.7);">Fraternité</span>
+            
+            <div class="motto-wrapper" style="margin-bottom:32px;">
+              <span class="line-left"></span>
+              <span class="line-right"></span>
+              <div class="motto-inner" style="font-size:clamp(18px,3vw,28px);font-weight:600;letter-spacing:0.08em;font-family:'Playfair Display',serif;">
+                <span style="color:#ffffff;">Liberté</span>
+                <span style="margin:0 16px;color:rgba(255,255,255,0.6);">·</span>
+                <span style="color:#ffffff;">Égalité</span>
+                <span style="margin:0 16px;color:rgba(255,255,255,0.6);">·</span>
+                <span style="color:#ffffff;">Fraternité</span>
               </div>
             </div>
+            
             <p style="font-size:18px;opacity:0.95;max-width:600px;margin:0 auto;line-height:1.7;">
               Liberdade, Igualdade e Fraternidade — os ideais que moldaram uma nação e inspiraram o mundo. Descubra a terra da arte, da gastronomia e da história.
             </p>
@@ -478,19 +483,19 @@
           </p>
         </div>
         <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px;" class="reveal">
-          <div class="card-hover" style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;text-align:center;border-top:4px solid var(--blue);">
+          <div class="card-hover" style="background:var(--card);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:16px;padding:28px;text-align:center;border-top:4px solid var(--blue);">
             <div style="font-family:'Playfair Display',serif;font-size:42px;font-weight:700;color:var(--blue);margin-bottom:8px;">69,1M</div>
             <div style="color:var(--muted);font-size:14px;font-weight:500;">Habitantes</div>
           </div>
-          <div class="card-hover" style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;text-align:center;border-top:4px solid var(--red);">
+          <div class="card-hover" style="background:var(--card);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:16px;padding:28px;text-align:center;border-top:4px solid var(--red);">
             <div style="font-family:'Playfair Display',serif;font-size:42px;font-weight:700;color:var(--red);margin-bottom:8px;">643K</div>
             <div style="color:var(--muted);font-size:14px;font-weight:500;">Km² de área</div>
           </div>
-          <div class="card-hover" style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;text-align:center;border-top:4px solid var(--blue);">
+          <div class="card-hover" style="background:var(--card);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:16px;padding:28px;text-align:center;border-top:4px solid var(--blue);">
             <div style="font-family:'Playfair Display',serif;font-size:42px;font-weight:700;color:var(--blue);margin-bottom:8px;">102M</div>
             <div style="color:var(--muted);font-size:14px;font-weight:500;">Turistas/ano</div>
           </div>
-          <div class="card-hover" style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;text-align:center;border-top:4px solid var(--red);">
+          <div class="card-hover" style="background:var(--card);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:16px;padding:28px;text-align:center;border-top:4px solid var(--red);">
             <div style="font-family:'Playfair Display',serif;font-size:42px;font-weight:700;color:var(--red);margin-bottom:8px;">1792</div>
             <div style="color:var(--muted);font-size:14px;font-weight:500;">Primeira República</div>
           </div>
@@ -513,7 +518,7 @@
                  alt="A Liberdade Guiando o Povo" 
                  style="width:100%;min-height:500px;object-fit:cover;display:block;"
                  onerror="this.style.display='none'">
-            <div style="padding:16px 20px;background:var(--card);border-top:1px solid var(--border);">
+            <div style="padding:16px 20px;background:rgba(255,255,255,0.95);backdrop-filter:blur(8px);border-top:1px solid var(--border);">
               <p style="font-family:'Playfair Display',serif;font-size:14px;color:var(--muted);margin:0;font-style:italic;">
                 "A Liberdade Guiando o Povo" — Eugène Delacroix (1830)
               </p>
@@ -553,7 +558,7 @@
     </section>
     
     <!-- Pontos Turísticos -->
-    <section id="turismo" style="padding:100px 24px;background:linear-gradient(180deg,var(--white),#f0f6ff);">
+    <section id="turismo" style="padding:100px 24px;">
       <div style="max-width:1280px;margin:0 auto;">
         <div class="reveal" style="text-align:center;margin-bottom:50px;">
           <p style="color:var(--blue);font-size:13px;letter-spacing:0.25em;text-transform:uppercase;font-weight:600;margin-bottom:12px;">Descubra</p>
@@ -714,7 +719,7 @@
       <!-- Gastronomia -->
       <div id="cultura-gastronomia" class="tab-content active">
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px;">
-          <div class="card-hover reveal" style="background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+          <div class="card-hover reveal" style="background:var(--card);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
             <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-uo7y4d541q/d16d38ddf0f342f195a4ac078081b582.png~tplv-0es2k971ck-image.image?rcl=20260821004803C712783BE44AD52DC0B0&rk3s=8e244e95&rrcfp=935dee89&x-expires=1787849284&x-signature=hHX0ZtsuWn5atBxuHVrMMJLnbE8%3D" 
                  alt="Croissants" class="culture-card-img" onerror="this.style.display='none'">
             <div style="padding:24px;">
@@ -722,7 +727,7 @@
               <p style="color:var(--muted);font-size:14px;line-height:1.6;">Pão folhado em forma de lua crescente, símbolo do café da manhã francês.</p>
             </div>
           </div>
-          <div class="card-hover reveal" style="background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+          <div class="card-hover reveal" style="background:var(--card);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
             <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-uo7y4d541q/92e11d514145496da91ead8a764f7529.avif~tplv-0es2k971ck-image.image?rcl=20260821004803C712783BE44AD52DC0B0&rk3s=8e244e95&rrcfp=935dee89&x-expires=1787849284&x-signature=xhbMEgOGlH2xdN%2FDA%2Bh1qp7IGEs%3D" 
                  alt="Queijos" class="culture-card-img" onerror="this.style.display='none'">
             <div style="padding:24px;">
@@ -730,7 +735,7 @@
               <p style="color:var(--muted);font-size:14px;line-height:1.6;">Mais de 1.000 variedades, incluindo Brie, Camembert e Roquefort.</p>
             </div>
           </div>
-          <div class="card-hover reveal" style="background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+          <div class="card-hover reveal" style="background:var(--card);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
             <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-uo7y4d541q/dc5ce206522b4b4aa12623499ebd07ca.webp~tplv-0es2k971ck-image.image?rcl=20260821004803C712783BE44AD52DC0B0&rk3s=8e244e95&rrcfp=935dee89&x-expires=1787849284&x-signature=54vOsv%2FGmWtQWXAAdauSdIeAfl4%3D" 
                  alt="Vinhos" class="culture-card-img" onerror="this.style.display='none'">
             <div style="padding:24px;">
@@ -738,7 +743,7 @@
               <p style="color:var(--muted);font-size:14px;line-height:1.6;">Bordeaux, Borgonha e Champagne são regiões mundialmente famosas.</p>
             </div>
           </div>
-          <div class="card-hover reveal" style="background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+          <div class="card-hover reveal" style="background:var(--card);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
             <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-uo7y4d541q/6d932d86945f4c0ca3e7f84c94983889.webp~tplv-0es2k971ck-image.image?rcl=20260821004803C712783BE44AD52DC0B0&rk3s=8e244e95&rrcfp=935dee89&x-expires=1787849284&x-signature=JCMiX24DONELNWRO%2BvsZhnbUUds%3D" 
                  alt="Macarons" class="culture-card-img" onerror="this.style.display='none'">
             <div style="padding:24px;">
@@ -752,7 +757,7 @@
       <!-- Figuras Históricas -->
       <div id="cultura-figuras" class="tab-content">
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-top:30px;">
-          <div class="card-hover reveal" style="background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+          <div class="card-hover reveal" style="background:var(--card);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
             <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-uo7y4d541q/11a0bf640291438c90fbd2b72313c986.jpg~tplv-0es2k971ck-image.image?rcl=202608210104191D4DAEA879F4EE32FD50&rk3s=8e244e95&rrcfp=935dee89&x-expires=1787850260&x-signature=omn9uydKBpqwBz%2FUNx%2FsCxu6upc%3D" 
                  alt="Joana d'Arc" class="figure-card-img" onerror="this.style.display='none'">
             <div style="padding:24px;border-top:4px solid var(--blue);">
@@ -761,7 +766,7 @@
               <p style="color:var(--text);font-size:14px;line-height:1.7;margin:0;">Heroína nacional que liderou o exército francês na Guerra dos Cem Anos.</p>
             </div>
           </div>
-          <div class="card-hover reveal" style="background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+          <div class="card-hover reveal" style="background:var(--card);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
             <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-uo7y4d541q/7eff9c85de7a4a02b5be750c8d667aa5.jpg~tplv-0es2k971ck-image.image?rcl=202608210104191D4DAEA879F4EE32FD50&rk3s=8e244e95&rrcfp=935dee89&x-expires=1787850260&x-signature=acEbPxKZkG5J53QORkHzr4w1yOI%3D" 
                  alt="Napoleão Bonaparte" class="figure-card-img" onerror="this.style.display='none'">
             <div style="padding:24px;border-top:4px solid var(--red);">
@@ -770,7 +775,7 @@
               <p style="color:var(--text);font-size:14px;line-height:1.7;margin:0;">Imperador e gênio militar. Seu Código Napoleônico influenciou sistemas jurídicos mundiais.</p>
             </div>
           </div>
-          <div class="card-hover reveal" style="background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+          <div class="card-hover reveal" style="background:var(--card);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
             <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-uo7y4d541q/c3aad84663014ce689fcfa9b23d30421.jpg~tplv-0es2k971ck-image.image?rcl=202608210104191D4DAEA879F4EE32FD50&rk3s=8e244e95&rrcfp=935dee89&x-expires=1787850260&x-signature=NkGbjWGGaf6IL9trWqcmcp4LYQ8%3D" 
                  alt="Voltaire" class="figure-card-img" onerror="this.style.display='none'">
             <div style="padding:24px;border-top:4px solid var(--blue);">
@@ -779,7 +784,7 @@
               <p style="color:var(--text);font-size:14px;line-height:1.7;margin:0;">Filósofo do Iluminismo, defensor da liberdade de expressão e da razão.</p>
             </div>
           </div>
-          <div class="card-hover reveal" style="background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+          <div class="card-hover reveal" style="background:var(--card);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
             <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-uo7y4d541q/c65b2684c14c44d0bf9ae62bf65eb545.jpg~tplv-0es2k971ck-image.image?rcl=202608210104191D4DAEA879F4EE32FD50&rk3s=8e244e95&rrcfp=935dee89&x-expires=1787850260&x-signature=XKbAmF5WI4ryikPQAA%2BzFhYGTF8%3D" 
                  alt="Marie Curie" class="figure-card-img" onerror="this.style.display='none'">
             <div style="padding:24px;border-top:4px solid var(--red);">
@@ -791,84 +796,84 @@
         </div>
       </div>
       
-      <!-- Cinema Francês - COM IMAGENS -->
+      <!-- Cinema Francês -->
       <div id="cultura-cinema" class="tab-content">
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-top:30px;">
-          <div class="card-hover reveal" style="background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+          <div class="card-hover reveal" style="background:var(--card);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
             <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/f290bc34577a497ea79822ee7e713f37.jpeg~tplv-0es2k971ck-image.image?rcl=20260821020529474E21C85BCF9074A33D&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789841175&x-signature=GwFtEkyl11lT%2BnVB9WbAY2%2FZrbg%3D" 
                  alt="Cinema Francês" class="culture-card-img" onerror="this.style.display='none'">
             <div style="padding:24px;">
               <h4 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--text);margin:0 0 8px;">A Sétima Arte</h4>
-              <p style="color:var(--muted);font-size:14px;line-height:1.6;">O cinema francês é um dos mais influentes do mundo, com estética única e narrativas profundas que marcaram gerações.</p>
+              <p style="color:var(--muted);font-size:14px;line-height:1.6;">O cinema francês é um dos mais influentes do mundo, com estética única e narrativas profundas.</p>
             </div>
           </div>
-          <div class="card-hover reveal" style="background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+          <div class="card-hover reveal" style="background:var(--card);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
             <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/7a538c1e5901464b956f30d3154282d5.jpeg~tplv-0es2k971ck-image.image?rcl=202608210224216A5E41AF97F2693EAA5F&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789842292&x-signature=cImhEo698X7hDvbdmRZD0KXcfk0%3D" 
                  alt="Nouvelle Vague" class="culture-card-img" onerror="this.style.display='none'">
             <div style="padding:24px;">
               <h4 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--text);margin:0 0 8px;">Nouvelle Vague</h4>
-              <p style="color:var(--muted);font-size:14px;line-height:1.6;">Movimento dos anos 60 com Godard, Truffaut e Rohmer, que revolucionou a linguagem cinematográfica com liberdade estética.</p>
+              <p style="color:var(--muted);font-size:14px;line-height:1.6;">Movimento dos anos 60 com Godard, Truffaut e Rohmer, que revolucionou a linguagem cinematográfica.</p>
             </div>
           </div>
-          <div class="card-hover reveal" style="background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+          <div class="card-hover reveal" style="background:var(--card);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
             <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/1ba12037a26741669e2432dcaab5e613.jpeg~tplv-0es2k971ck-image.image?rcl=202608210224216A5E41AF97F2693EAA5F&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789842287&x-signature=Ti6rRSV966wo8b6sY1ZM%2B74wkc4%3D" 
                  alt="Irmãos Lumière" class="culture-card-img" onerror="this.style.display='none'">
             <div style="padding:24px;">
               <h4 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--text);margin:0 0 8px;">Irmãos Lumière</h4>
-              <p style="color:var(--muted);font-size:14px;line-height:1.6;">Auguste e Louis Lumière realizaram a primeira projeção pública de cinema em Paris, em 28 de dezembro de 1895 — o nascimento da sétima arte.</p>
+              <p style="color:var(--muted);font-size:14px;line-height:1.6;">Auguste e Louis Lumière realizaram a primeira projeção pública de cinema em Paris, em 28 de dezembro de 1895.</p>
             </div>
           </div>
-          <div class="card-hover reveal" style="background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+          <div class="card-hover reveal" style="background:var(--card);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
             <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/b0cdfab237ac4c7ab1c714a473ac7732.jpeg~tplv-0es2k971ck-image.image?rcl=20260821020529474E21C85BCF9074A33D&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789841196&x-signature=WsKDMjB%2B33%2FKTLoHJXq0udm%2FE0A%3D" 
                  alt="Festival de Cannes" class="culture-card-img" onerror="this.style.display='none'">
             <div style="padding:24px;">
               <h4 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--text);margin:0 0 8px;">Festival de Cannes</h4>
-              <p style="color:var(--muted);font-size:14px;line-height:1.6;">O mais prestigioso festival de cinema do mundo, realizado anualmente na Riviera Francesa desde 1946, celebrando a arte cinematográfica.</p>
+              <p style="color:var(--muted);font-size:14px;line-height:1.6;">O mais prestigioso festival de cinema do mundo, realizado anualmente na Riviera Francesa desde 1946.</p>
             </div>
           </div>
         </div>
       </div>
       
-      <!-- Danças Francesas - COM IMAGENS -->
+      <!-- Danças Francesas -->
       <div id="cultura-dancas" class="tab-content">
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-top:30px;">
-          <div class="card-hover reveal" style="background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
-            <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/129b7c26061a42b08a55ae6b8cfdb623.jpeg~tplv-0es2k971ck-image.image?rcl=20260821020529474E21C85BCF9074A33D&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789841199&x-signature=kO%2F0Cbuhl%2FMM2h%2B3h%2BrpkebJWr0%3D" 
-                 alt="Cancan no Moulin Rouge" class="culture-card-img" onerror="this.style.display='none'">
+          <div class="card-hover reveal" style="background:var(--card);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+            <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-uo7y4d541q/acc424df32904f51ba44b512b2f93f59.jpg~tplv-0es2k971ck-image.image?rcl=202608212129452DA104A7157D6CE0FBE6&rk3s=8e244e95&rrcfp=935dee89&x-expires=1787923786&x-signature=4ZWxLddzrf31p9%2BN1rJqMWw7qMs%3D" 
+                 alt="Cancan" class="culture-card-img" onerror="this.style.display='none'">
             <div style="padding:24px;">
               <h4 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--text);margin:0 0 8px;">Cancan</h4>
-              <p style="color:var(--muted);font-size:14px;line-height:1.6;">Dança vibrante e energética do século XIX, imortalizada pelo Moulin Rouge em Montmartre, com suas saias rodadas e movimentos acrobáticos.</p>
+              <p style="color:var(--muted);font-size:14px;line-height:1.6;">Dança vibrante e energética do século XIX, imortalizada pelo Moulin Rouge em Montmartre.</p>
             </div>
           </div>
-          <div class="card-hover reveal" style="background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
-            <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/8717fafcfb5b4d6bb81f9527f1651c87.jpeg~tplv-0es2k971ck-image.image?rcl=20260821020529474E21C85BCF9074A33D&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789841201&x-signature=YV4RfV9HXO0hvbeIdeYkRjuKbGw%3D" 
-                 alt="Balé da Ópera de Paris" class="culture-card-img" onerror="this.style.display='none'">
+          <div class="card-hover reveal" style="background:var(--card);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+            <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-uo7y4d541q/8c380c7f33f0499e8a75d1e822a12cf4.jpg~tplv-0es2k971ck-image.image?rcl=202608212129452DA104A7157D6CE0FBE6&rk3s=8e244e95&rrcfp=935dee89&x-expires=1787923786&x-signature=DdP8waqLIHJuVZKrrcmm0vck9DI%3D" 
+                 alt="Balé Clássico" class="culture-card-img" onerror="this.style.display='none'">
             <div style="padding:24px;">
               <h4 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--text);margin:0 0 8px;">Balé Clássico</h4>
-              <p style="color:var(--muted);font-size:14px;line-height:1.6;">A Ópera de Paris, fundada em 1669 por Luís XIV, é o berço do balé clássico e uma das mais prestigiadas escolas de dança do mundo.</p>
+              <p style="color:var(--muted);font-size:14px;line-height:1.6;">A Ópera de Paris é o berço do balé clássico e uma das mais prestigiadas escolas de dança do mundo.</p>
             </div>
           </div>
-          <div class="card-hover reveal" style="background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
-            <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/26a8d4be0ab8475591be35a733b17b85.jpeg~tplv-0es2k971ck-image.image?rcl=202608210224216A5E41AF97F2693EAA5F&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789842293&x-signature=FdKCWhDoBUorekplY%2BstnH0Mirk%3D" 
+          <div class="card-hover reveal" style="background:var(--card);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+            <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-uo7y4d541q/8173eecc798845bd874bdbe77d4f3299.jpg~tplv-0es2k971ck-image.image?rcl=202608212129452DA104A7157D6CE0FBE6&rk3s=8e244e95&rrcfp=935dee89&x-expires=1787923786&x-signature=b1myti8IEVkxFQo4ZMZJ5npnzBg%3D" 
                  alt="Valsa" class="culture-card-img" onerror="this.style.display='none'">
             <div style="padding:24px;">
               <h4 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--text);margin:0 0 8px;">Valsa</h4>
-              <p style="color:var(--muted);font-size:14px;line-height:1.6;">Dança de salão em compasso ternário, popularizada nos elegantes salões parisienses do século XIX, símbolo de romantismo e sofisticação.</p>
+              <p style="color:var(--muted);font-size:14px;line-height:1.6;">Dança de salão em compasso ternário, popularizada nos elegantes salões parisienses do século XIX.</p>
             </div>
           </div>
-          <div class="card-hover reveal" style="background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
-            <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/101bb3b5aab548a78d0fc6feef85449c.jpeg~tplv-0es2k971ck-image.image?rcl=202608210224216A5E41AF97F2693EAA5F&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789842330&x-signature=6vYTG7xba6m6Y8CzH1gV799nMq0%3D" 
+          <div class="card-hover reveal" style="background:var(--card);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+            <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-uo7y4d541q/1c4d9ef35e274c5d9dc4ac48d9609ce9.webp~tplv-0es2k971ck-image.image?rcl=202608212129452DA104A7157D6CE0FBE6&rk3s=8e244e95&rrcfp=935dee89&x-expires=1787923786&x-signature=ueaIHbz%2FeErY7jdlLUPAP6vhH3k%3D" 
                  alt="Gavotte" class="culture-card-img" onerror="this.style.display='none'">
             <div style="padding:24px;">
               <h4 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--text);margin:0 0 8px;">Gavotte</h4>
-              <p style="color:var(--muted);font-size:14px;line-height:1.6;">Dança tradicional da região da Bretanha, com trajes coloridos e fitas, que se tornou popular nos salões da corte francesa dos séculos XVII e XVIII.</p>
+              <p style="color:var(--muted);font-size:14px;line-height:1.6;">Dança tradicional da Bretanha, com trajes típicos e coreografias em grupo.</p>
             </div>
           </div>
         </div>
       </div>
     </section>
     
-    <!-- Moda & Arte - COM IMAGENS ELEGANTE -->
+    <!-- Moda & Arte -->
     <section id="moda" class="fashion-section" style="padding:100px 24px;">
       <div style="max-width:1280px;margin:0 auto;">
         <div class="reveal" style="text-align:center;margin-bottom:20px;">
@@ -883,12 +888,12 @@
         
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:28px;margin-top:50px;">
           <div class="fashion-card card-hover reveal">
-            <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/63608d4bbaf048a08d7753ec0354bf29.jpeg~tplv-0es2k971ck-image.image?rcl=202608210224216A5E41AF97F2693EAA5F&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789842325&x-signature=TtjpwoYQRV59jacKclYo4SVXHSE%3D" 
-                 alt="Moda Francesa" class="fashion-card-img" onerror="this.style.display='none'">
+            <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-uo7y4d541q/dab4d31162d44da8aede6bd889d1a39d.png~tplv-0es2k971ck-image.image?rcl=202608212129452DA104A7157D6CE0FBE6&rk3s=8e244e95&rrcfp=935dee89&x-expires=1787923786&x-signature=m3TNi4CuBEr6pWtcgFuIoGdR3xY%3D" 
+                 alt="Alta-Costura Parisiense" class="fashion-card-img" onerror="this.style.display='none'">
             <div style="padding:28px;">
               <h4 style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--text);margin:0 0 12px;">👗 Alta-Costura Parisiense</h4>
               <p style="color:var(--text);font-size:15px;line-height:1.7;margin-bottom:16px;">
-                Paris é a capital mundial da moda, lar das casas mais icônicas: <strong>Chanel</strong>, que revolucionou o guarda-roupa feminino; <strong>Dior</strong>, com o "New Look"; <strong>Yves Saint Laurent</strong>, pioneiro do prêt-à-porter; e <strong>Louis Vuitton</strong>, símbolo de luxo desde 1854.
+                Paris é a capital mundial da moda, lar das casas mais icônicas: <strong>Chanel</strong>, <strong>Dior</strong>, <strong>Yves Saint Laurent</strong> e <strong>Louis Vuitton</strong>.
               </p>
               <div style="display:flex;flex-wrap:wrap;gap:8px;">
                 <span style="background:var(--gold-soft);color:#8B6914;padding:5px 14px;border-radius:20px;font-size:13px;font-weight:600;">Chanel</span>
@@ -905,7 +910,7 @@
             <div style="padding:28px;">
               <h4 style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--text);margin:0 0 12px;">🎨 Impressionismo & Arte</h4>
               <p style="color:var(--text);font-size:15px;line-height:1.7;margin-bottom:16px;">
-                A França foi berço do <strong>Impressionismo</strong>, movimento que mudou para sempre a história da arte. <strong>Claude Monet</strong> com suas nenúfares, <strong>Auguste Renoir</strong> com suas cenas de dança e luz, e <strong>Edgar Degas</strong> com suas bailarinas, criaram uma nova forma de ver o mundo.
+                A França foi berço do <strong>Impressionismo</strong> com <strong>Monet</strong>, <strong>Renoir</strong> e <strong>Degas</strong>, que mudaram a história da arte.
               </p>
               <div style="display:flex;flex-wrap:wrap;gap:8px;">
                 <span style="background:var(--blue-soft);color:var(--blue);padding:5px 14px;border-radius:20px;font-size:13px;font-weight:600;">Monet</span>
@@ -916,34 +921,33 @@
           </div>
           
           <div class="fashion-card card-hover reveal">
-            <div style="height:280px;background:linear-gradient(135deg,#1a1a2e,#2d1b4e);display:flex;align-items:center;justify-content:center;flex-direction:column;padding:30px;text-align:center;">
-              <div style="font-size:60px;margin-bottom:16px;">🏛️</div>
-              <div style="font-family:'Playfair Display',serif;font-size:26px;color:var(--gold);margin-bottom:8px;">Museus Icônicos</div>
-              <div style="font-size:14px;color:#c9b87a;line-height:1.6;">
-                Museu do Louvre<br>Museu d'Orsay<br>Centro Pompidou<br>Museu Rodin
-              </div>
-            </div>
+            <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-uo7y4d541q/1189fe2d597c413a9be91458387b41d7.jpg~tplv-0es2k971ck-image.image?rcl=202608212129452DA104A7157D6CE0FBE6&rk3s=8e244e95&rrcfp=935dee89&x-expires=1787923786&x-signature=k57JrWqwAvy62c2Eh1V4hFYeJU4%3D" 
+                 alt="Museus de Paris" class="fashion-card-img" onerror="this.style.display='none'">
             <div style="padding:28px;">
               <h4 style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--text);margin:0 0 12px;">🏛️ Museus de Paris</h4>
-              <p style="color:var(--text);font-size:15px;line-height:1.7;">
-                Paris abriga alguns dos maiores museus do mundo: o <strong>Louvre</strong> com a Mona Lisa, o <strong>Musée d'Orsay</strong> dedicado à arte do século XIX, o <strong>Centro Pompidou</strong> de arte moderna e o <strong>Museu Rodin</strong>.
+              <p style="color:var(--text);font-size:15px;line-height:1.7;margin-bottom:16px;">
+                <strong>Louvre</strong>, <strong>Musée d'Orsay</strong>, <strong>Centro Pompidou</strong> — os maiores museus do mundo estão em Paris.
               </p>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                <span style="background:var(--gold-soft);color:#8B6914;padding:5px 14px;border-radius:20px;font-size:13px;font-weight:600;">Louvre</span>
+                <span style="background:var(--gold-soft);color:#8B6914;padding:5px 14px;border-radius:20px;font-size:13px;font-weight:600;">Orsay</span>
+                <span style="background:var(--gold-soft);color:#8B6914;padding:5px 14px;border-radius:20px;font-size:13px;font-weight:600;">Pompidou</span>
+              </div>
             </div>
           </div>
           
           <div class="fashion-card card-hover reveal">
-            <div style="height:280px;background:linear-gradient(135deg,#4a0080,#8B008B);display:flex;align-items:center;justify-content:center;flex-direction:column;padding:30px;text-align:center;">
-              <div style="font-size:60px;margin-bottom:16px;">✨</div>
-              <div style="font-family:'Playfair Display',serif;font-size:26px;color:#FFD700;margin-bottom:8px;">Semana de Moda</div>
-              <div style="font-size:14px;color:#E6E6FA;line-height:1.6;">
-                Paris Fashion Week<br>Haute Couture<br>Prêt-à-Porter<br>Desde 1973
-              </div>
-            </div>
+            <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-uo7y4d541q/dd6b0cff68fb4f4ca1581df9ae3b097f.webp~tplv-0es2k971ck-image.image?rcl=202608212129452DA104A7157D6CE0FBE6&rk3s=8e244e95&rrcfp=935dee89&x-expires=1787923786&x-signature=vdd7QoK%2F1ATRnzh%2FsVFzgxJIQPU%3D" 
+                 alt="Paris Fashion Week" class="fashion-card-img" onerror="this.style.display='none'">
             <div style="padding:28px;">
               <h4 style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--text);margin:0 0 12px;">✨ Paris Fashion Week</h4>
-              <p style="color:var(--text);font-size:15px;line-height:1.7;">
-                A <strong>Semana de Moda de Paris</strong> é o evento mais importante do calendário fashion global. Realizada duas vezes ao ano, define as tendências que o mundo seguirá, reunindo estilistas, celebridades e amantes da moda.
+              <p style="color:var(--text);font-size:15px;line-height:1.7;margin-bottom:16px;">
+                A <strong>Semana de Moda de Paris</strong> é o evento mais importante do calendário fashion global, definindo tendências mundiais.
               </p>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                <span style="background:var(--red-soft);color:var(--red);padding:5px 14px;border-radius:20px;font-size:13px;font-weight:600;">Haute Couture</span>
+                <span style="background:var(--blue-soft);color:var(--blue);padding:5px 14px;border-radius:20px;font-size:13px;font-weight:600;">Prêt-à-Porter</span>
+              </div>
             </div>
           </div>
         </div>
@@ -951,7 +955,7 @@
     </section>
     
     <!-- História Timeline -->
-    <section id="historia" style="padding:100px 24px;background:linear-gradient(180deg,#faf5eb,var(--white));">
+    <section id="historia" style="padding:100px 24px;">
       <div style="max-width:1100px;margin:0 auto;">
         <div class="reveal" style="text-align:center;margin-bottom:60px;">
           <p style="color:var(--blue);font-size:13px;letter-spacing:0.25em;text-transform:uppercase;font-weight:600;margin-bottom:12px;">Linha do Tempo</p>
@@ -960,6 +964,7 @@
         </div>
         
         <div class="reveal">
+          <!-- 1804 - Napoleão -->
           <div class="timeline-item">
             <div class="timeline-line"></div>
             <div class="timeline-dot"></div>
@@ -971,29 +976,31 @@
               <div class="timeline-text">
                 <div style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--red);margin-bottom:8px;">1804 — Império Napoleônico</div>
                 <p style="color:var(--text);font-size:15px;line-height:1.7;margin:0;">
-                  Napoleão Bonaparte é coroado Imperador dos Franceses na Catedral de Notre-Dame. Expandiu o território francês por toda a Europa e implementou reformas legais e administrativas que duram até hoje.
+                  Napoleão Bonaparte é coroado Imperador dos Franceses na Catedral de Notre-Dame. Expandiu o território francês por toda a Europa.
                 </p>
               </div>
             </div>
           </div>
           
+          <!-- 1870 - Terceira República -->
           <div class="timeline-item">
             <div class="timeline-line"></div>
             <div class="timeline-dot"></div>
             <div class="timeline-grid">
               <div class="timeline-img">
-                <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/9325fe414b9144808a64e7244c6b1c14.jpeg~tplv-0es2k971ck-image.image?rcl=20260821020529474E21C85BCF9074A33D&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789841161&x-signature=NEU2e0zbyyIPYHLChHG0HRuPSqA%3D" 
+                <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-uo7y4d541q/40e92a83773f489aa5150b53b89abcd9.jpg~tplv-0es2k971ck-image.image?rcl=2026082122112639EEF4C1FB890A55600E&rk3s=8e244e95&rrcfp=935dee89&x-expires=1787926289&x-signature=mlmZOzqTuubfG25fJG8sgK3ynYY%3D" 
                      alt="Terceira República" onerror="this.style.display='none'">
               </div>
               <div class="timeline-text">
                 <div style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--blue);margin-bottom:8px;">1870 — Terceira República</div>
                 <p style="color:var(--text);font-size:15px;line-height:1.7;margin:0;">
-                  Proclamada após a derrota na Guerra Franco-Prussiana, a Terceira República durou 70 anos e consolidou definitivamente as instituições democráticas francesas.
+                  Proclamada após a derrota na Guerra Franco-Prussiana, durou 70 anos e consolidou as instituições democráticas francesas.
                 </p>
               </div>
             </div>
           </div>
           
+          <!-- 1944 - Libertação -->
           <div class="timeline-item">
             <div class="timeline-line"></div>
             <div class="timeline-dot"></div>
@@ -1005,40 +1012,42 @@
               <div class="timeline-text">
                 <div style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--red);margin-bottom:8px;">1944 — Libertação de Paris</div>
                 <p style="color:var(--text);font-size:15px;line-height:1.7;margin:0;">
-                  Paris é libertada da ocupação nazista em 25 de agosto. A multidão enche as ruas em celebração, marcando um ponto de virada decisivo na Segunda Guerra Mundial.
+                  Paris é libertada da ocupação nazista em 25 de agosto. A multidão enche as ruas em celebração.
                 </p>
               </div>
             </div>
           </div>
           
+          <!-- 1958 - Quinta República -->
           <div class="timeline-item">
             <div class="timeline-line"></div>
             <div class="timeline-dot"></div>
             <div class="timeline-grid">
               <div class="timeline-img">
-                <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/0f79b9a7e510408a9b59dc71d6fa6115.jpeg~tplv-0es2k971ck-image.image?rcl=20260821020529474E21C85BCF9074A33D&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789841176&x-signature=%2FqbpdMGzkfHaBj5%2Faq30FGDKNPg%3D" 
+                <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-uo7y4d541q/c6e177e2a68546ae860cd373cb524f51.jpg~tplv-0es2k971ck-image.image?rcl=2026082122112639EEF4C1FB890A55600E&rk3s=8e244e95&rrcfp=935dee89&x-expires=1787926289&x-signature=DhZJKocQdCjKbGFpchjKDjmxThQ%3D" 
                      alt="Quinta República" onerror="this.style.display='none'">
               </div>
               <div class="timeline-text">
                 <div style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--blue);margin-bottom:8px;">1958 — Quinta República</div>
                 <p style="color:var(--text);font-size:15px;line-height:1.7;margin:0;">
-                  Charles de Gaulle funda a Quinta República com uma nova constituição que fortalece o poder presidencial. Esse sistema político vigora na França até os dias de hoje.
+                  Charles de Gaulle funda a Quinta República com nova constituição. Sistema político vigora até hoje.
                 </p>
               </div>
             </div>
           </div>
           
+          <!-- 1992 - Tratado de Maastricht -->
           <div class="timeline-item">
             <div class="timeline-dot"></div>
             <div class="timeline-grid">
               <div class="timeline-img">
-                <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/26adce2bbae5447c9b92f43313619913.jpeg~tplv-0es2k971ck-image.image?rcl=20260821020529474E21C85BCF9074A33D&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789841181&x-signature=kEbfP1XPteHnzdu1muJFDiStfm8%3D" 
+                <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-uo7y4d541q/4c76e816b1d145228a59977d12305aaf.webp~tplv-0es2k971ck-image.image?rcl=2026082122112639EEF4C1FB890A55600E&rk3s=8e244e95&rrcfp=935dee89&x-expires=1787926289&x-signature=Iw2jvx8j%2FBmPpIa61xhMqiqllDs%3D" 
                      alt="Tratado de Maastricht" onerror="this.style.display='none'">
               </div>
               <div class="timeline-text">
                 <div style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--red);margin-bottom:8px;">1992 — Tratado de Maastricht</div>
                 <p style="color:var(--text);font-size:15px;line-height:1.7;margin:0;">
-                  A França se torna um dos membros fundadores da União Europeia. O acordo cria a cidadania europeia e estabelece as bases para o euro.
+                  A França se torna membro fundador da União Europeia, criando a cidadania europeia e as bases para o euro.
                 </p>
               </div>
             </div>
@@ -1084,11 +1093,11 @@
             <h4 style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;margin:0 0 16px;">Lema Nacional</h4>
             <div style="background:rgba(255,255,255,0.1);border-radius:12px;padding:20px;text-align:center;border:1px solid rgba(255,255,255,0.15);">
               <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin-bottom:8px;">
-                <span style="color:#66b3ff;">Liberté</span>
+                <span style="color:#ffffff;">Liberté</span>
                 <span style="margin:0 8px;opacity:0.5;">·</span>
                 <span style="color:#ffffff;">Égalité</span>
                 <span style="margin:0 8px;opacity:0.5;">·</span>
-                <span style="color:#ff8585;">Fraternité</span>
+                <span style="color:#ffffff;">Fraternité</span>
               </div>
               <p style="font-size:12px;opacity:0.7;margin:0;font-style:italic;">Liberdade, Igualdade, Fraternidade</p>
             </div>
